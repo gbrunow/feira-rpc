@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bufio"
+	//"bufio"
 	"fmt"
 	"net/rpc"
 	"os"
@@ -10,7 +10,7 @@ import (
 
 type Args struct {
 	A int
-	B float32
+	B float64
 }
 type Quotient struct {
 	Q, R int
@@ -18,12 +18,12 @@ type Quotient struct {
 
 type Fruit struct {
 	FruitName string
-	Price     float32
+	Price     float64
 }
 
 type Weighting struct {
 	FruitName string
-	Weight    float32
+	Weight    float64
 }
 
 // type Success bool
@@ -56,7 +56,7 @@ func main() {
 		os.Exit(0)
 	case '2':
 		args := readWeighting()
-		var reply float32
+		var reply float64
 		err = client.Call("Arith.Calculate", args, &reply)
 		checkError("Calculate: ", err)
 
@@ -71,7 +71,7 @@ func main() {
 
 func readEntry() Fruit {
 	var name string
-	var price float32
+	var price float64
 
 	fmt.Print("Name: ")
 	name = readLine()
@@ -83,10 +83,11 @@ func readEntry() Fruit {
 
 func readWeighting() Weighting {
 	var name string
-	var weight float32
+	var weight float64
 
 	fmt.Print("Fruit: ")
-	name = readLine()
+	//name = readLine()
+	fmt.Scanln(&name)
 	fmt.Print("Weight: ")
 	fmt.Scanln(&weight)
 
@@ -94,13 +95,18 @@ func readWeighting() Weighting {
 }
 
 func readLine() string {
+	aux := ""
+	fmt.Scanln(&aux)
+
+	return aux/*
+
 	consoleReader := bufio.NewReader(os.Stdin)
 
 	str, _ := consoleReader.ReadString('\n')
 	str = strings.ToLower(str)
 	str = strings.Trim(str, "\n")
 
-	return str
+	return str*/
 }
 
 func checkError(str string, err error) {

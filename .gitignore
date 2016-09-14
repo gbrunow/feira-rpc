@@ -6,6 +6,7 @@
 *.o
 *.a
 *.so
+*.csv
 
 # Folders
 _obj
