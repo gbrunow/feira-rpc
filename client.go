@@ -48,9 +48,9 @@ func main() {
 		checkError("Register: ", err)
 
 		if reply {
-			fmt.Println(strings.Title(args.FruitName), "registered with success.")
+			fmt.Println(strings.Title(args.FruitName), " registered with success.")
 		} else {
-			fmt.Println(strings.Title(args.FruitName), "not registered.")
+			fmt.Println("Error:" , strings.Title(args.FruitName), "already registered.")
 		}
 
 		os.Exit(0)

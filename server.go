@@ -57,10 +57,17 @@ func (t *Arith) Register(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName, args.Price)
 
-	dataBase[args.FruitName] = args.Price
-	writeCSV()
+  _, ok := dataBase[args.FruitName]
 
-	*reply = true
+  if ok{
+		*reply = false
+	} else {
+    dataBase[args.FruitName] = args.Price
+    writeCSV()
+
+    *reply = true
+		}
+
 	return nil
 }
 
