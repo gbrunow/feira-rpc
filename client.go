@@ -60,7 +60,11 @@ func main() {
 		err = client.Call("Arith.Calculate", args, &reply)
 		checkError("Calculate: ", err)
 
-		fmt.Println("Price", reply)
+		if(reply>=0){
+				fmt.Println("Price", reply)
+			}else{
+				fmt.Println("Product not regitered")
+			}
 
 		os.Exit(0)
 	default:

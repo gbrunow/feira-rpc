@@ -9,6 +9,7 @@ import (
 	"io"
 	"encoding/csv"
 	"strconv"
+  "log"
 )
 
 type Fruit struct{
@@ -35,10 +36,19 @@ func loadCSV(){
 			}
 		dataBase[record[0]], _ = strconv.ParseFloat(record[1], 64)
     }
+    f.Close()
 }
 
 func writeCSV(){
-
+  f, _ := os.Create("feiraFrutaData.csv")
+  w := csv.NewWriter(bufio.NewWriter(f))
+  for key, value := range dataBase {
+      record := []string{key,fmt.Sprintf("%.2f", value)}
+      if err := w.Write(record); err != nil {
+  			log.Fatalln("error writing record to csv:", err)
+  		}
+    }
+    w.Flush()
 }
 
 type Arith int
@@ -48,14 +58,14 @@ func (t *Arith) Register(args *Fruit, reply *bool) error{
 	fmt.Println(args.FruitName, args.Price)
 
 	dataBase[args.FruitName] = args.Price
-	//TODO: write to CSV
+	writeCSV()
 
 	*reply = true
 	return nil
 }
 
 func (t *Arith) Calculate(args *Weighting, reply *float64) error{
-	
+
 	fmt.Println(args.FruitName, args.Weight)
 
 	valueKg, ok := dataBase[args.FruitName]
@@ -63,7 +73,7 @@ func (t *Arith) Calculate(args *Weighting, reply *float64) error{
 	if ok{
 		*reply = args.Weight*valueKg
 	} else {
-		*reply = 0
+		*reply = -1
 		}
 
 	return nil
