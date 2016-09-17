@@ -18,8 +18,27 @@ type Weighting struct{
 }
 
 type Arith int
+type FruitName string
 
 func (t *Arith) Register(args *Fruit, reply *bool) error{
+
+	fmt.Println(args.FruitName, args.Price)
+	//TODO: write to CSV
+
+	*reply = true
+	return nil
+}
+
+func (t *Arith) Remove(args *Fruit, reply *bool) error{
+
+	fmt.Println(args.FruitName)
+	//TODO: write to CSV
+
+	*reply = true
+	return nil
+}
+
+func (t *Arith) Update(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName, args.Price)
 	//TODO: write to CSV

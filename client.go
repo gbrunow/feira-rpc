@@ -26,8 +26,6 @@ type Weighting struct {
 	Weight    float32
 }
 
-// type Success bool
-
 func main() {
 	service := "localhost:1234"
 	client, err := rpc.Dial("tcp", service)
@@ -35,37 +33,73 @@ func main() {
 	checkError("Dial: ", err)
 
 	var op byte
-	fmt.Println("1 - Register")
-	fmt.Println("2 - Calculate")
-	fmt.Print("Option: ")
-	fmt.Scanf("%c\n", &op)
 
-	switch op {
-	case '1':
-		args := readEntry()
-		var reply bool
-		err = client.Call("Arith.Register", args, &reply)
-		checkError("Register: ", err)
+	for {
+		fmt.Println("1 - Register")
+		fmt.Println("2 - Update Fruit")
+		fmt.Println("3 - Remove Fruit")
+		fmt.Println("4 - Calculate Price")
+		fmt.Println("5 - Exit")
+		fmt.Print("Option: ")
+		fmt.Scanf("%c\n", &op)
 
-		if reply {
-			fmt.Println(strings.Title(args.FruitName), "registered with success.")
-		} else {
-			fmt.Println(strings.Title(args.FruitName), "not registered.")
+		switch op {
+		case '1':
+			args := readEntry()
+			var reply bool
+			err = client.Call("Arith.Register", args, &reply)
+			checkError("Register: ", err)
+
+			if reply {
+				fmt.Println(strings.Title(args.FruitName), "registered with success.")
+			} else {
+				fmt.Println(strings.Title(args.FruitName), "not registered.")
+			}
+
+			break
+		case '2':
+			args := readEntry()
+			var reply bool
+			err = client.Call("Arith.Update", args, &reply)
+			checkError("Update: ", err)
+
+			if reply {
+				fmt.Println(strings.Title(args.FruitName), "updated with success.")
+			} else {
+				fmt.Println(strings.Title(args.FruitName), "not updated.")
+			}
+
+			break
+		case '3':
+			args := readFruitName()
+
+			var reply bool
+			err = client.Call("Arith.Remove", args, &reply)
+			checkError("Remove: ", err)
+
+			if reply {
+				fmt.Println(strings.Title(args.FruitName), "removed with success.")
+			} else {
+				fmt.Println(strings.Title(args.FruitName), "not removed.")
+			}
+
+			break
+		case '4':
+			args := readWeighting()
+			var reply float32
+			err = client.Call("Arith.Calculate", args, &reply)
+			checkError("Calculate: ", err)
+
+			fmt.Println("Price", reply)
+
+			break
+		case '5':
+
+			os.Exit(0)
+		default:
+			fmt.Println("Opção inválida: ", op)
+			os.Exit(1)
 		}
-
-		os.Exit(0)
-	case '2':
-		args := readWeighting()
-		var reply float32
-		err = client.Call("Arith.Calculate", args, &reply)
-		checkError("Calculate: ", err)
-
-		fmt.Println("Price", reply)
-
-		os.Exit(0)
-	default:
-		fmt.Println("Opção inválida: ", op)
-		os.Exit(1)
 	}
 }
 
@@ -79,6 +113,15 @@ func readEntry() Fruit {
 	fmt.Scanln(&price)
 
 	return Fruit{name, price}
+}
+
+func readFruitName() Fruit {
+	var name string
+
+	fmt.Print("Name: ")
+	name = readLine()
+
+	return Fruit{name, 0}
 }
 
 func readWeighting() Weighting {
