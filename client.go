@@ -53,7 +53,7 @@ func main() {
 			if reply {
 				fmt.Println(strings.Title(args.FruitName), "registered with success.")
 			} else {
-				fmt.Println(strings.Title(args.FruitName), "not registered.")
+				fmt.Println(strings.Title(args.FruitName), "already exist, use Update option to change price.")
 			}
 
 			break
@@ -66,7 +66,7 @@ func main() {
 			if reply {
 				fmt.Println(strings.Title(args.FruitName), "updated with success.")
 			} else {
-				fmt.Println(strings.Title(args.FruitName), "not updated.")
+				fmt.Println(strings.Title(args.FruitName), "product does not exist.")
 			}
 
 			break
@@ -80,7 +80,7 @@ func main() {
 			if reply {
 				fmt.Println(strings.Title(args.FruitName), "removed with success.")
 			} else {
-				fmt.Println(strings.Title(args.FruitName), "not removed.")
+				fmt.Println(strings.Title(args.FruitName), "product did not exist.")
 			}
 
 			break
@@ -93,7 +93,7 @@ func main() {
 			if reply >= 0 {
 				fmt.Println("Price", reply)
 			}else{
-				fmt.Println("Error, price cannot be calculated.")
+				fmt.Println(strings.Title(args.FruitName), "is not registered.")
 			}
 
 			break

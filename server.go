@@ -75,18 +75,32 @@ func (t *Arith) Register(args *Fruit, reply *bool) error{
 func (t *Arith) Remove(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName)
-	//TODO: write to CSV
+  _, ok := dataBase[args.FruitName]
 
-	*reply = true
+  if ok{
+    delete(dataBase, args.FruitName)
+    writeCSV()
+		*reply = true
+	} else {
+    *reply = false
+		}
+
 	return nil
 }
 
 func (t *Arith) Update(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName, args.Price)
-	//TODO: write to CSV
+  _, ok := dataBase[args.FruitName]
 
-	*reply = true
+  if ok{
+    dataBase[args.FruitName] = args.Price
+    writeCSV()
+		*reply = true
+	} else {
+    *reply = false
+		}
+
 	return nil
 }
 
