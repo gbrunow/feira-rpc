@@ -39,7 +39,8 @@ func main() {
 		fmt.Println("2 - Update Fruit")
 		fmt.Println("3 - Remove Fruit")
 		fmt.Println("4 - Calculate Price")
-		fmt.Println("5 - Exit")
+		fmt.Println("5 - Consult Price")
+		fmt.Println("6 - Exit")
 		fmt.Print("Option: ")
 		fmt.Scanf("%c\n", &op)
 
@@ -98,6 +99,20 @@ func main() {
 
 			break
 		case '5':
+			args := readFruitName()
+
+			var reply float32
+			err = client.Call("Arith.Consult", args, &reply)
+			checkError("Consult: ", err)
+
+			if reply >= 0 {
+				fmt.Println("Price per kg", reply)
+			} else {
+				fmt.Println(strings.Title(args.FruitName), "not registered.")
+			}
+
+			break
+		case '6':
 
 			os.Exit(0)
 		default:

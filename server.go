@@ -26,7 +26,14 @@ var dataBase map[string]float64
 
 func loadCSV(){
 	dataBase = make(map[string]float64)
-	f, _ := os.Open("feiraFrutaData.csv")
+	f, err := os.Open("feiraFrutaData.csv")
+  if err != nil{
+    f, err = os.Create("feiraFrutaData.csv")
+    if err != nil{
+      fmt.Println("Failed to open/create CSV file")
+      os.Exit(0)
+    }
+  }
 	r := csv.NewReader(bufio.NewReader(f))
 	for {
 		record, err := r.Read()
@@ -119,6 +126,21 @@ func (t *Arith) Calculate(args *Weighting, reply *float64) error{
 	return nil
 }
 
+func (t *Arith) Consult(args *Weighting, reply *float64) error{
+
+	fmt.Println(args.FruitName, args.Weight)
+
+	valueKg, ok := dataBase[args.FruitName]
+
+	if ok{
+		*reply = valueKg
+	} else {
+		*reply = -1
+		}
+
+	return nil
+}
+
 func main() {
 	loadCSV()
 	arith := new(Arith)
@@ -133,7 +155,7 @@ func main() {
 		conn, err :=
 			listener.Accept()
 		checkError("Accept: ", err)
-		rpc.ServeConn(conn)
+		go rpc.ServeConn(conn)
 	}
 }
 
