@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"bufio"
+	"bufio"
 	"fmt"
 	"net/rpc"
 	"os"
@@ -148,8 +148,7 @@ func readWeighting() Weighting {
 	var weight float64
 
 	fmt.Print("Fruit: ")
-	//name = readLine()
-	fmt.Scanln(&name)
+	name = readLine()
 	fmt.Print("Weight: ")
 	fmt.Scanln(&weight)
 
@@ -157,18 +156,18 @@ func readWeighting() Weighting {
 }
 
 func readLine() string {
-	aux := ""
+	/*var aux string
 	fmt.Scanln(&aux)
 
-	return aux/*
+	return aux*/
 
 	consoleReader := bufio.NewReader(os.Stdin)
 
 	str, _ := consoleReader.ReadString('\n')
 	str = strings.ToLower(str)
-	str = strings.Trim(str, "\n")
+	str = strings.TrimRight(str, "\r\n")
 
-	return str*/
+	return str
 }
 
 func checkError(str string, err error) {

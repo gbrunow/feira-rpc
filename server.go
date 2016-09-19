@@ -128,7 +128,7 @@ func (t *Arith) Calculate(args *Weighting, reply *float64) error{
 
 func (t *Arith) Consult(args *Weighting, reply *float64) error{
 
-	fmt.Println(args.FruitName, args.Weight)
+	fmt.Println(args.FruitName)
 
 	valueKg, ok := dataBase[args.FruitName]
 
