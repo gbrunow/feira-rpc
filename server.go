@@ -58,10 +58,10 @@ func writeCSV(){
     w.Flush()
 }
 
-type Arith int
+type FruitCall int
 type FruitName string
 
-func (t *Arith) Register(args *Fruit, reply *bool) error{
+func (t *FruitCall) Register(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName, args.Price)
 
@@ -79,7 +79,7 @@ func (t *Arith) Register(args *Fruit, reply *bool) error{
 	return nil
 }
 
-func (t *Arith) Remove(args *Fruit, reply *bool) error{
+func (t *FruitCall) Remove(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName)
   _, ok := dataBase[args.FruitName]
@@ -95,7 +95,7 @@ func (t *Arith) Remove(args *Fruit, reply *bool) error{
 	return nil
 }
 
-func (t *Arith) Update(args *Fruit, reply *bool) error{
+func (t *FruitCall) Update(args *Fruit, reply *bool) error{
 
 	fmt.Println(args.FruitName, args.Price)
   _, ok := dataBase[args.FruitName]
@@ -111,7 +111,7 @@ func (t *Arith) Update(args *Fruit, reply *bool) error{
 	return nil
 }
 
-func (t *Arith) Calculate(args *Weighting, reply *float64) error{
+func (t *FruitCall) Calculate(args *Weighting, reply *float64) error{
 
 	fmt.Println(args.FruitName, args.Weight)
 
@@ -126,7 +126,7 @@ func (t *Arith) Calculate(args *Weighting, reply *float64) error{
 	return nil
 }
 
-func (t *Arith) Consult(args *Weighting, reply *float64) error{
+func (t *FruitCall) Consult(args *Weighting, reply *float64) error{
 
 	fmt.Println(args.FruitName)
 
@@ -143,8 +143,8 @@ func (t *Arith) Consult(args *Weighting, reply *float64) error{
 
 func main() {
 	loadCSV()
-	arith := new(Arith)
-	rpc.Register(arith)
+	fruitcall := new(FruitCall)
+	rpc.Register(fruitcall)
 	tcpAddr, err :=
 		net.ResolveTCPAddr("tcp", "localhost:1234")
 	checkError("ResolveTCPAddr: ", err)

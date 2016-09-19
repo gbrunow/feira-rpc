@@ -8,14 +8,6 @@ import (
 	"strings"
 )
 
-type Args struct {
-	A int
-	B float64
-}
-type Quotient struct {
-	Q, R int
-}
-
 type Fruit struct {
 	FruitName string
 	Price     float64
@@ -48,7 +40,7 @@ func main() {
 		case '1':
 			args := readEntry()
 			var reply bool
-			err = client.Call("Arith.Register", args, &reply)
+			err = client.Call("FruitCall.Register", args, &reply)
 			checkError("Register: ", err)
 
 			if reply {
@@ -61,7 +53,7 @@ func main() {
 		case '2':
 			args := readEntry()
 			var reply bool
-			err = client.Call("Arith.Update", args, &reply)
+			err = client.Call("FruitCall.Update", args, &reply)
 			checkError("Update: ", err)
 
 			if reply {
@@ -75,7 +67,7 @@ func main() {
 			args := readFruitName()
 
 			var reply bool
-			err = client.Call("Arith.Remove", args, &reply)
+			err = client.Call("FruitCall.Remove", args, &reply)
 			checkError("Remove: ", err)
 
 			if reply {
@@ -88,7 +80,7 @@ func main() {
 		case '4':
 			args := readWeighting()
 			var reply float32
-			err = client.Call("Arith.Calculate", args, &reply)
+			err = client.Call("FruitCall.Calculate", args, &reply)
 			checkError("Calculate: ", err)
 
 			if reply >= 0 {
@@ -102,7 +94,7 @@ func main() {
 			args := readFruitName()
 
 			var reply float32
-			err = client.Call("Arith.Consult", args, &reply)
+			err = client.Call("FruitCall.Consult", args, &reply)
 			checkError("Consult: ", err)
 
 			if reply >= 0 {
